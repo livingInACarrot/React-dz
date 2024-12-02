@@ -1,0 +1,15 @@
+.accordion 
+  position: relative
+  &:hover 
+    &::first-letter
+      color: darkred
+      font-size: 1.5em
+    &::after 
+      content: ''
+      position: absolute
+      top: 0
+      left: 0
+      right: 0
+      bottom: 0
+      border: 2px solid darkred
+      pointer-events: none

@@ -1,0 +1,10 @@
+.main-content {
+  display: flex;
+  flex-grow: 1;
+  margin-left: 0;
+  background-color: #0449aa;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}

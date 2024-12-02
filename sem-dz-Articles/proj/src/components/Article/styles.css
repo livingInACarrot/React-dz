@@ -1,0 +1,13 @@
+.accordion {
+  margin-bottom: 16px;
+}
+
+.accordion p {
+  color: #999;
+}
+
+.accordion p::first-letter {
+  color: darkred;
+  font-size: 1.5em;
+  font-weight: bold;
+}
