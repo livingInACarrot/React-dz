@@ -56,21 +56,23 @@ const ProductList: React.FC = () => {
     <div
       style={{
         width: '100%',
-        marginLeft: '30px',
-        marginRight: '2rem',
+        marginLeft: '79px',
+        marginRight: '80px',
         marginTop: '100px',
         marginBottom: '100px',
         overflowY: 'auto',
         flexDirection: 'column',
         alignItems: 'center',
+        padding: '40px',
       }}
     >
       <div
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(5, 1fr)',
-          gridGap: '16px',
+          gridGap: '20px',
           maxHeight: '100%',
+          alignItems: 'center',
         }}
       >
         {products_filtered.map((product: IProduct) => (

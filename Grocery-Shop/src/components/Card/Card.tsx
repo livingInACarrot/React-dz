@@ -9,13 +9,15 @@ import { styled } from '@mui/system';
 const ProdCard = styled(Card)({
   '&': {
     height: '400px',
-    width: '250px',
+    width: '200px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     backgroundColor: '#f7f2ef',
     borderRadius: '8px',
     boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+    paddingLeft: '20px',
+    paddingRight: '20px',
   },
   '&:hover': { transform: 'scale(1.05)' },
 });
