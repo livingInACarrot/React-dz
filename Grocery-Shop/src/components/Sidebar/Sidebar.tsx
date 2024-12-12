@@ -1,53 +1,13 @@
 import React from 'react';
-import { Categories } from '/src/entities/Categories.ts';
-import { ApplyFilters } from '../ProductList/ProductList.tsx';
+import { Categories } from '../../entities/Categories.ts';
 import { styled } from '@mui/system';
+import { IFilter } from '../../entities/IProduct.ts';
 
 interface SidebarProps {
   isOpen: boolean;
+  setFilter: (arg: IFilter) => void;
+  toggleSidebar: () => void;
 }
-
-const clearSearch = (inputElement: HTMLInputElement | null): void => {
-  if (inputElement) {
-    inputElement.value = '';
-  }
-};
-
-const resetCheckbox = (checkboxElement: HTMLInputElement | null): void => {
-  if (checkboxElement) {
-    checkboxElement.checked = false;
-  }
-};
-
-const setDefaultCategory = (selectElement: HTMLSelectElement | null): void => {
-  if (selectElement) {
-    selectElement.value = selectElement.options[0].value;
-  }
-};
-
-const resetAll = (
-  inputElement: HTMLInputElement | null,
-  checkboxElement: HTMLInputElement | null,
-  selectElement: HTMLSelectElement | null
-): void => {
-  clearSearch(inputElement);
-  resetCheckbox(checkboxElement);
-  setDefaultCategory(selectElement);
-};
-
-const Search = (
-  inputElement: HTMLInputElement | null,
-  checkboxElement: HTMLInputElement | null,
-  selectElement: HTMLSelectElement | null
-): void => {
-  if (inputElement && checkboxElement && selectElement) {
-    ApplyFilters(
-      inputElement.value,
-      checkboxElement.checked,
-      selectElement.value
-    );
-  }
-};
 
 const SideBar = styled('aside')({
   backgroundColor: '#f7f2ef',
@@ -58,7 +18,6 @@ const SideBar = styled('aside')({
   bottom: 0,
   width: '18%',
   transition: 'transform 0.3s ease-in-out',
-  transform: 'translateX(-110%)',
   pointerEvents: 'auto',
   boxShadow: '10px 10px 10px rgba(0, 0, 0, 0.1)',
   objectFit: 'cover',
@@ -138,7 +97,7 @@ const BSearch = {
   width: '268px',
 };
 
-const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
+const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar, setFilter }) => {
   const CategoryOptions = Object.keys(Categories) as Array<
     keyof typeof Categories
   >;
@@ -146,25 +105,45 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
   const checkboxRef = React.useRef<HTMLInputElement>(null);
   const selectRef = React.useRef<HTMLSelectElement>(null);
 
-  const handleClearSearch = (): void => {
-    clearSearch(inputRef.current);
+  const handleClearSearch = () => { //нет необходимости выносить логику из компонента
+    if (inputRef.current) {
+      inputRef.current.value = '';
+    }
   };
-  const handleSetDefaultCategory = (): void => {
-    setDefaultCategory(selectRef.current);
+  const handleSetDefaultCategory = () => {
+    if (selectRef.current) {
+      selectRef.current.value = CategoryOptions[0];
+    }
   };
+
+  const resetCheckbox = () => {
+    if (checkboxRef.current) {
+      checkboxRef.current.checked = false;
+    }
+  };
+
   const handleResetAll = (): void => {
-    resetAll(inputRef.current, checkboxRef.current, selectRef.current);
+    handleClearSearch();
+    handleSetDefaultCategory();
+    resetCheckbox();
   };
   const handleSearch = (): void => {
-    Search(inputRef.current, checkboxRef.current, selectRef.current);
+    if (inputRef.current && checkboxRef.current && selectRef.current) {
+      toggleSidebar();
+      setFilter({
+        title: inputRef.current.value,
+        onStock: checkboxRef.current.checked,
+        category: selectRef.current.value
+      });
+    }
   };
 
   return (
     <SideBar
       style={
         isOpen
-          ? { transform: 'translateX(0%)' }
-          : { transform: 'translateX(-110%)' }
+          ? { display: 'block' }
+          : { display: 'none' }
       }
     >
       <B1 onClick={handleClearSearch}>x</B1>
