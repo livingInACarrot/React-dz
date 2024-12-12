@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
-import { IProduct } from '/src/entities/IProduct.ts';
-import products from '/src/data/products.json';
+import { IProduct, IFilter } from '../../entities/IProduct.ts';
 import Product from '../Card/Card.tsx';
 import ModalWindow from '../ModalWindow/ModalWindow.tsx';
-import { Categories } from '/src/entities/Categories.ts';
+import { Categories } from '../../entities/Categories.ts';
 
-var products_filtered = products;
+//var products_filtered = products;
+//здесь тоже не стоит использовать var, одну из причин описал ниже
+//во вторых, если ты могла заметить, когда у тебя в products_filtered присваивалось новое значение, оно не отображалось
+//это связано с тем, что  React не видит этих изменений
+//для того, чтобы при изменениях происходил перерендер компонентов, необходимо использовать useState
+//его я вынес в компонент App.tsx
 
-export function ApplyFilters(
-  title: string,
-  onStock: boolean,
-  category: string
-) {
-  var result = products;
+export function applyFilters({title, onStock, category}: IFilter, products: IProduct[]) { //Функции стоит называть с маленькой буквы//camelCase
+  let result = products; //не нужно использовать var, лучше использовать let
+  //у var сломанная область видимости, это давняя проблема JS, а соответственно и TS
+  //let - это тот же var только с адекватно работающей областью видимости
+  //let доступна только в блоке, где ее объявили, например, в этой функции(ApplyFilters)
+  //если мы будем использовать var, то получить к ней доступ можно будет извне, что может привести к ошибкам в логике поведения
 
   // Фильтр по названию
   if (title != '') {
@@ -32,13 +36,20 @@ export function ApplyFilters(
   // Категория соответствует
   if (category != '') {
     result = result.filter(
-      (product: { category: Categories }) => product.category == category
+      ({ category: productCategory }) => productCategory == category 
+      //Тут и так на вход подается объект типа IProduct, мы с помощью диструктуризации(фигурных скобок {}) получает из объекта свойство category
+      //Также нет необходимости использовать enum и указывать тип категории здесь, это лучше сделать в объявлении типа IProduct
     );
   }
-  products_filtered = result;
+  return result;
 }
 
-const ProductList: React.FC = () => {
+interface Props {
+  products: IProduct[];
+  filter: IFilter;
+}
+
+const ProductList = ({ products, filter }: Props) => {
   const [isModalWindowOpen, setModalWindowOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<IProduct | null>(null);
 
@@ -75,7 +86,7 @@ const ProductList: React.FC = () => {
           alignItems: 'center',
         }}
       >
-        {products_filtered.map((product: IProduct) => (
+        {applyFilters(filter, products).map((product: IProduct) => (
           <Product
             key={product.id}
             {...product}

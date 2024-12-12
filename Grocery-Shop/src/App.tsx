@@ -2,9 +2,17 @@ import React, { useState } from 'react';
 import NavigationBar from './components/NavigationBar/NavigationBar.tsx';
 import ProductList from './components/ProductList/ProductList.tsx';
 import Sidebar from './components/Sidebar/Sidebar.tsx';
+import productsJson from './data/products.json';
+import { IFilter, IProduct } from './entities/IProduct.ts';
 
 const App: React.FC = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
+  const [products, setProducts] = useState<IProduct[]>(productsJson);
+  const [filter, setFilter] = useState<IFilter>({
+    title: '',
+    onStock: false,
+    category: ''
+  })
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
@@ -22,8 +30,15 @@ const App: React.FC = () => {
           backgroundColor: '#c29f89',
         }}
       >
-        <Sidebar isOpen={isSidebarOpen} />
-        <ProductList />
+        <Sidebar 
+          toggleSidebar={toggleSidebar} 
+          setFilter={setFilter} 
+          isOpen={isSidebarOpen} 
+        />
+        <ProductList 
+          filter={filter} 
+          products={products} 
+        />
       </div>
     </div>
   );
