@@ -3,6 +3,7 @@ import { IProduct, IFilter } from '../../entities/IProduct.ts';
 import Product from '../Card/Card.tsx';
 import ModalWindow from '../ModalWindow/ModalWindow.tsx';
 import { Categories } from '../../entities/Categories.ts';
+import { Pagination } from '@mui/material';
 
 //var products_filtered = products;
 //здесь тоже не стоит использовать var, одну из причин описал ниже
@@ -99,6 +100,7 @@ const ProductList = ({ products, filter }: Props) => {
         onClose={closeModalWindow}
         product={selectedProduct}
       />
+      <Pagination count={10} sx={{display: 'block', marginBottom: '10px', marginTop: "40px", transform: 'translateX(-50%)',}}/>
     </div>
   );
 };

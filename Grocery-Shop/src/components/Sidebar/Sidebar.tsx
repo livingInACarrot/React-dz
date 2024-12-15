@@ -51,7 +51,7 @@ const B1 = styled('button')({
   width: '30px',
   backgroundColor: '#eee9e7',
   position: 'fixed',
-  top: '16px',
+  top: '78px',
   left: '250px',
 });
 
@@ -67,7 +67,7 @@ const B2 = styled('button')({
   width: '30px',
   backgroundColor: '#eee9e7',
   position: 'fixed',
-  top: '98px',
+  top: '159px',
   left: '250px',
 });
 
@@ -105,17 +105,21 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar, setFilter }) =
   const checkboxRef = React.useRef<HTMLInputElement>(null);
   const selectRef = React.useRef<HTMLSelectElement>(null);
 
-  const handleClearSearch = () => { //нет необходимости выносить логику из компонента
+  // Очищение строки поиска
+  const handleClearSearch = () => {
     if (inputRef.current) {
       inputRef.current.value = '';
     }
   };
+
+  // Ресет категории
   const handleSetDefaultCategory = () => {
     if (selectRef.current) {
       selectRef.current.value = CategoryOptions[0];
     }
   };
 
+  // Ресет галочки
   const resetCheckbox = () => {
     if (checkboxRef.current) {
       checkboxRef.current.checked = false;

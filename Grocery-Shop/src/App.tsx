@@ -4,6 +4,7 @@ import ProductList from './components/ProductList/ProductList.tsx';
 import Sidebar from './components/Sidebar/Sidebar.tsx';
 import productsJson from './data/products.json';
 import { IFilter, IProduct } from './entities/IProduct.ts';
+import { Pagination } from '@mui/material';
 
 const App: React.FC = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
@@ -39,6 +40,7 @@ const App: React.FC = () => {
           filter={filter} 
           products={products} 
         />
+        
       </div>
     </div>
   );

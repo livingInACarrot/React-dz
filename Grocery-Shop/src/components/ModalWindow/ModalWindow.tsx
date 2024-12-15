@@ -1,6 +1,6 @@
 import React from 'react';
 import './styles.css';
-import { IProduct } from '/src/entities/IProduct.ts';
+import { IProduct } from '../../entities/IProduct.ts';
 import emptyImage from '../../images/empty.jpg';
 import { Box, Modal, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';

@@ -1,4 +1,4 @@
-import { IProduct } from '/src/entities/IProduct.ts';
+import { IProduct } from '../../entities/IProduct.ts';
 import emptyImage from '../../images/empty.jpg';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -19,7 +19,7 @@ const ProdCard = styled(Card)({
     paddingLeft: '20px',
     paddingRight: '20px',
   },
-  '&:hover': { transform: 'scale(1.05)' },
+  '&:hover': { transform: 'scale(1.08)' },
 });
 
 const Product = ({
